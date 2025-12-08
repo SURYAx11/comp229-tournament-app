@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "1400b9e9-e23e-40be-83ed-e7017533927a",
+		"name": "COMP229 Tournament API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49843822",
+		"_collection_link": "https://kannan11surya-3297268.postman.co/workspace/Surya-Jr's-Workspace~c10fd853-b71d-4ce8-810d-96d74c7fe8c4/collection/49843822-1400b9e9-e23e-40be-83ed-e7017533927a?action=share&source=collection_link&creator=49843822"
+	},
+	"item": [
+		{
+			"name": "Auth | Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Created (201)\", function () {\r",
+							"  pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"try {\r",
+							"  const json = pm.response.json();\r",
+							"  if (json.token) {\r",
+							"    pm.environment.set(\"token\", json.token);\r",
+							"  }\r",
+							"} catch (e) {}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Surya\",\r\n    \"lastname\": \"Sreekumar\",\r\n    \"email\": \"surya@example.com\",\r\n    \"password\": \"Passw0rd!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/users/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth | Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"  const json = pm.response.json();\r",
+							"  if (json.token) {\r",
+							"    pm.environment.set(\"token\", json.token);\r",
+							"  }\r",
+							"} catch (e) {}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"surya@example.com\",\r\n  \"password\": \"Passw0rd!\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/users/login\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth | Me",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/users/me",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"if (json && json._id) {\r",
+							"  pm.environment.set(\"tournamentId\", json._id);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Campus Cup\",\r\n  \"description\": \"Inter-dept football\",\r\n  \"sport\": \"football\",\r\n  \"startDate\": \"2025-11-10\",\r\n  \"endDate\": \"2025-11-20\",\r\n  \"isPublic\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | List Mine",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | List Public",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/public",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Get One",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/{{tournamentId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"{{tournamentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Add Team",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"CS Warriors\",\r\n  \"coach\": \"Coach Ram\",\r\n  \"players\": [\"A1\",\"A2\",\"A3\",\"A4\",\"A5\"]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/{{tournamentId}}/teams",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"{{tournamentId}}",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Add Match",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"homeTeam\": \"CS Warriors\",\r\n  \"awayTeam\": \"IT Strikers\",\r\n  \"date\": \"2025-11-12T15:00:00.000Z\",\r\n  \"venue\": \"Field A\",\r\n  \"status\": \"scheduled\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/{{tournamentId}}/matches",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"{{tournamentId}}",
+						"matches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Updated description\",\r\n  \"isPublic\": false\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/{{tournamentId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"{{tournamentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tournaments | Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/tournaments/{{tournamentId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"tournaments",
+						"{{tournamentId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
