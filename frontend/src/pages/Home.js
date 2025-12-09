@@ -17,6 +17,18 @@ function Home() {
       <section style={{ textAlign: "center", marginBottom: "1.5rem" }}>
         <h1>TournamentHub</h1>
         <p>Manage and view tournaments.</p>
+
+        {/* CI/CD demo paragraph */}
+        <p
+          style={{
+            marginTop: "1rem",
+            fontWeight: "bold",
+            color: "green",
+          }}
+        >
+          CI/CD Demo: This text was added from a feature branch and deployed
+          automatically to Netlify using GitHub.
+        </p>
       </section>
 
       <section>
